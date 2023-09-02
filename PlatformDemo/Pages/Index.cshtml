@@ -1,0 +1,112 @@
+﻿@page
+@model PlatformDemo.Pages.IndexModel
+@using PlatformDemo
+
+<h1>Customer List</h1>
+
+<div class="form-group">
+    <input type="text" class="form-control" id="customerSearch" placeholder="Search by name">
+    <button class="btn btn-primary" id="searchButton">Search</button>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Total Order Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model.Customers)
+        {
+            <tr>
+                <td>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#customerDetailsModal" data-customer-id="@customer.CustomerId">
+                        @customer.Name
+                    </a>
+                </td>
+                <td>@customer.PhoneNumber</td>
+                <td>@customer.TotalOrderAmount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <!-- Add numbered pages here -->
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Customer Details Modal -->
+<div class="modal fade" id="customerDetailsModal" tabindex="-1" role="dialog" aria-labelledby="customerDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerDetailsModalLabel">Customer Details</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Display customer details here -->
+                <dl class="row">
+                    <dt class="col-sm-4">Name:</dt>
+                    <dd class="col-sm-8" id="customerName"></dd>
+                    <dt class="col-sm-4">Phone Number:</dt>
+                    <dd class="col-sm-8" id="customerPhoneNumber"></dd>
+                    <dt class="col-sm-4">Total Order Amount:</dt>
+                    <dd class="col-sm-8" id="customerTotalOrderAmount"></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript code to handle customer details modal
+    document.addEventListener('DOMContentLoaded', function () {
+        var modal = document.getElementById('customerDetailsModal');
+        modal.addEventListener('show.bs.modal', function (event) {
+            var relatedTarget = event.relatedTarget;
+            var customerId = relatedTarget.getAttribute('data-customer-id');
+            var customers = @Html.Raw(Json.Serialize(Model.Customers));
+            console.log(customers["$id"], customers["$values"])
+            var selectedCustomer = customers["$values"].find(function (customer) {
+                console.log(customers["$id"], customer.customerId)
+                return customers["$id"] == customer.customerId;
+            });
+
+            var customerName = document.getElementById('customerName');
+            var customerPhoneNumber = document.getElementById('customerPhoneNumber');
+            var customerTotalOrderAmount = document.getElementById('customerTotalOrderAmount');
+
+            customerName.textContent = selectedCustomer.name;
+            customerPhoneNumber.textContent = selectedCustomer.phoneNumber;
+            customerTotalOrderAmount.textContent = selectedCustomer.totalOrderAmount;
+        });
+
+        // JavaScript code for searching customers
+        var searchButton = document.getElementById('searchButton');
+        searchButton.addEventListener('click', function () {
+            var searchTerm = document.getElementById('customerSearch').value.toLowerCase();
+            var rows = document.querySelectorAll('tbody tr');
+
+            rows.forEach(function (row) {
+                var customerName = row.querySelector('td:first-child a').textContent.toLowerCase();
+                row.style.display = customerName.indexOf(searchTerm) > -1 ? '' : 'none';
+            });
+        });
+    });
+</script>
