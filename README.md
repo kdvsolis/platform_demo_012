@@ -1,6 +1,43 @@
 # PlatformDemo - Customer Management Application
 
 PlatformDemo is a web application built using ASP.NET Core Razor Pages and Entity Framework Core. It allows you to manage a list of customers and their associated orders. Customers can be searched and viewed in a user-friendly interface.
+# Test Task to Complete
+
+This repository contains a .NET solution named `PlatformDemo` with two projects: a .NET 6 Class Library and an ASP.NET Core 6 web application.
+
+## .NET 6 Class Library
+
+The class library project contains:
+- An Entity Framework DbContext using a SQL Server provider.
+- Two entity classes:
+  - `Customer` class with properties: Customer Id, Name, and Phone number.
+  - `Order` class with properties: Order Id, Order Number, and Amount.
+
+## ASP.NET Core 6 Web Application
+
+The web application project references the class library and includes:
+- A web page that displays a list of customers along with their phone numbers and the total amount of their orders. Each customer is displayed on a separate line, even if they have no orders.
+- Sample data is provided with 10-15 customers and 0-5 orders per customer.
+
+## Additional Instructions
+
+- Please make sure to document your code with proper comments.
+- Feel free to add your own enhancements to showcase your capabilities. It can be visual or functional.
+- If you have any questions about something not specified, use your judgment.
+- This task should take you less than an hour to complete.
+
+## How to Run
+
+To run the application, follow these steps:
+
+1. Clone this repository to your local machine.
+2. Open the `PlatformDemo.sln` solution file in Visual Studio or your preferred IDE.
+3. Build and run the ASP.NET Core web application project.
+4. Access the web page to view the list of customers and their orders.
+
+Please provide feedback and share the GitHub repository link with `recruiting@logicimtech.com`.
+
+Good luck with the task!
 
 ## Prerequisites
 
@@ -13,9 +50,9 @@ Before running PlatformDemo, make sure you have the following installed:
 
 1. **Clone the repository:**
 
-   ```bash
-   git clone https://github.com/yourusername/PlatformDemo.git
-   ```
+```bash
+git clone https://github.com/yourusername/PlatformDemo.git
+```
 
 2. **Update the database connection string in the appsettings.json file with your MySQL or database credentials:**
 ```
